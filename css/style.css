@@ -1,0 +1,97 @@
+* {
+    /* font-family: 'Baloo', cursive; */
+    /* font-family: Arial, Helvetica, sans-serif, cursive; */
+    font-family:'Times New Roman', Times, serif;
+  }
+  
+ 
+  table {
+      border: 10px solid black;
+  }
+  
+  td {
+      padding: 10px;
+      border-radius: 15px;
+      border: 1px solid black;
+     background: white;
+  }
+  
+  th {
+      background-color: navy;
+      color: white;
+  }
+
+body{
+    background-color:white;
+}
+header{
+    position:fixed;
+    width:98.75%;
+    background-color: antiquewhite;
+}
+
+nav{
+    height:40px;
+    margin-top:-10px;
+}  
+
+  nav li{
+    list-style-type: none;
+    margin-right:50px;
+    margin-top:10px;
+    float:right;
+
+    }
+    a:link {
+        text-decoration: none;
+        color:black;
+    }
+   #logo{
+       max-width: 308px;
+       margin-left:45px;
+   }
+   #stripe{
+       background-color: rgb(162, 199, 248);
+       outline-style:solid;
+      
+   }
+
+   h1{
+      position:absolute;
+      margin-left:500px;
+      font-weight: bolder;
+      list-style-type: none;
+      margin-top:35px;
+   }
+  #family{
+       width: 50%;
+       position:fixed;
+       margin-left:38%;
+       margin-top:16.5%;
+  }
+
+.imgCol{
+margin-left:50px;
+}
+footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    /* background-color: red; */
+    color:black;
+    text-align: center;
+}
+.line-separator{
+    
+    height:0px;
+    
+    /* background:#717171; */
+    
+    border-bottom:60px solid rgb(162, 199, 248);
+  
+    
+    }
+   
+    
+    

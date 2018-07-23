@@ -11,24 +11,27 @@
 <body>
     <header></header>
     <table id=storeTable></table>
+
     <form>
         <fieldset>
             <legend>Personal use only</legend>
             
-            <label></label>
-            <input>
+            <label for="location"> Store Name: </label> </br>
+            <input name="store" type=text/></br>
 
-            <label></label>
-            <input>
+            <label for="minimumSale">Minimum Sale:</label>
+            <input name="minSale" type=number/><br>
 
-            <label></label>
-            <input>
+            <label for="maximumSale">Maximum Sale:</label>
+            <input name="maxSale" type=number/><br>
 
-            <label></label>
-            <input>
+            <label for="averageSale">Average Sale:</label>
+            <input for="avgSale" type="number">
 
         </fieldset>
+        <button id"submit">submit</button>
     </form>
     
+    <script src="js/app.js"></script>
 </body>
 </html>
