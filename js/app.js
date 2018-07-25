@@ -3,6 +3,11 @@
 var allStores = [];
 var hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm'];
 
+// Global variables for DOM access and such
+//access form
+var salesForm = document.getElementById('userInput');
+
+
 function Store(avgCookie, minCust, maxCust, name) {
     this.avgCookie = avgCookie;
     this.minCust = minCust;
@@ -22,7 +27,7 @@ function Store(avgCookie, minCust, maxCust, name) {
 
 Store.prototype.calcCustPerHour = function () {
     for (var i = 0; i < hours.length; i++) {
-        var randomCustPerHour = Math.random(this.minCust, this.maxCust);
+        var randomCustPerHour = random(this.minCust, this.maxCust);
         this.custPerHour.push(randomCustPerHour);
     }
 };
@@ -31,64 +36,77 @@ Store.prototype.calcCookiePerHour = function () {
     this.calcCustPerHour();
     for (var i in hours) {
         this.cookiePerHour.push(this.custPerHour[i] * this.avgCookie)
-        console.log(this.cookiePerHour);
+        // console.log(this.cookiePerHour);
 
-        this.totalCookies += this.cookiePerHour[i]
-        console.log(this.totalCookies);
-
-        //    It can be written like: this.totalCookies = this.totalCookies + this.CookiePerHour[i]
+        this.totalCookies += this.cookiePerHour[i] // It can be written like: this.totalCookies = this.totalCookies + this.CookiePerHour[i]
+        // console.log(this.totalCookies);
     }
 };
 
 //using render is convection for rendering table 
+
+//Whenever working with table 
+//First step: Create element 
+//Second step: give it a text content
+//Third step: append to the parent
+
 Store.prototype.render = function () {
     this.calcCookiePerHour();
     var tableSheet = document.getElementById('storeTable');
-    var newTableRowEl = document.createElement('tr');
-    var newTableDataEl = document.createElement('td');
+    var newTr = document.createElement('tr');
+    var newTd = document.createElement('td');
 
-    newTableDataEl.textContent = this.name;
-    newTableRowEl.appendChild(newTableDataEl);
+    newTd.textContent = this.name;
 
-    for (var i in hours);
-    var newTableDataEl = document.createElement('td');
-    newTableDataEl.textContent = this.cookiePerHour[i];
+    newTr.append(newTd);
 
-    newTableRowEl.appendChild(newTableDataEl);
+    for (var i in hours) {
+        var newTd = document.createElement('td');
+        newTd.textContent = this.cookiePerHour[i];
+        newTr.append(newTd);
+    }
 
+
+    newTd = document.createElement('td');
+    newTd.textContent = this.totalCookies;
+    newTr.append(newTd);
+    tableSheet.append(newTr);
 };
+
+
 // var Ross = new Store(20, 5, 30, 'Ross');
 
 function renderAllStores() {
     //set up references
     var tableSheet = document.getElementById('storeTable');
-    var newTableRowEl = document.createElement('tr');
+    var newTr = document.createElement('tr');
 
     //========== Build header row ==========
     // Build location column name
 
-    var storeLocationTableDataEl = document.createElement('td');
-    storeLocationTableDataEl.textContent = 'Store Location';
-    newTableRowEl.appendChild(storeLocationTableDataEl);
+    var storeLocationTd = document.createElement('td');
+    storeLocationTd.textContent = 'Store Location';
+    newTr.append(storeLocationTd);
+
 
     for (var j in hours) {
-        var newTableDataEl = document.createElement('td');
-        newTableRowEl.textContent = hours[j];
-        newTableRowEl.appendChild(newTableDataEl);
+        var newTd = document.createElement('td');
+        newTd.textContent = hours[j];
+        newTr.append(newTd);
     }
 
-    var storeTotalTdEl = document.createElement('td');
-    storeTotalTdEl.textContent = 'Total';
-    newTableRowEl.appendChild(storeTotalTdEl);
 
-    tableSheet.appendChild(newTableRowEl);
+    var storeTotalTd = document.createElement('td');
+    storeTotalTd.textContent = 'Total';
+    newTr.append(storeTotalTd);
+    tableSheet.append(newTr);
+
 
     //========== END Build table header ========
     for (var i in allStores) {
-        allStores.render();
+        allStores[i].render();
     }
 }
-// console.log(pike);
 
 // New Stores
 var pike = new Store(7, 30, 70, 'Pike Market');
@@ -99,9 +117,6 @@ var alki = new Store(7, 30, 70, 'Alki');
 // pike.render();
 
 // renderAllStores();
-// console.log(renderAllStores);
-console.log(allStores);
-
 
 // inside the render function this === pike
 //========================================
@@ -113,43 +128,48 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-//========================================
-// Global variables for DOM access and such
-var salesForm = document.getElementById('userInput');
+// ========================================
 var allInputs = [];
 
 // add event listener to salesForm
-salesForm.addEventListener('submit',handleData);
+// salesForm.addEventListener('submit', handleData);
 
 // This function is the event handler for the submission of comments
 function handleData(event) {
+    console.log('here');
     event.preventDefault();
-    // console.log(event.target.Store.value);
-    var store = event.target.Store.value;
+    var numberAvg = event.target.numberAvg.value;
     var numberMin = event.target.numberMin.value;
     var numberMax = event.target.numberMax.value;
-    var numberAvg = event.target.numberAvg.value;
+    var store = event.target.store.value;
 
 
-    // gotta have it for this purpose. prevents page reload on a 'submit' event
-    // Validation to prevent empty form fields
-  if (!store || !numberMin|| !numberMax || !numberAvg) {
+// gotta have it for this purpose. prevents page reload on a 'submit' event
+// Validation to prevent empty form fields
+if (!numberAvg || !numberMin || !numberMax || !store) {
     return alert('Fields cannot be empty!');
-  }
+}
 
-  
-  // This empties the form fields after the data has been grabbed
+
+// This empties the form fields after the data has been grabbed
 //   event.target.who.value = null;
 //   event.target.says.value = null;
 
-  new Store(store,numberMin,numberMax,numberAvg);
+document.getElementById("storeTable").innerHTML = '';
 
- document.getElementById("storeTable").innerHTML= '';
-//   console.log('You just cleared the chat list!');
-    
-  renderAllStores();
-//   console.log(allStores);
-  }
+new Store(numberAvg, numberMin, numberMax, store);
+console.log('allStores', allStores);
+renderAllStores();
+
+}
+
+// newStore.render();
+
+
+
+salesForm.addEventListener('submit', handleData);
+renderAllStores();
+
 
 
 
